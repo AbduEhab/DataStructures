@@ -1,21 +1,36 @@
 package Java;
 
+/* This is the implementation of a dynamicly sized Stack that can be initialized as a fixed sized Stack */
+
 public class Stack {
 
     private Object[] stack;
     private int ptr = -1;
     private int size;
-    boolean dynamic = true;
+    private boolean dynamic = true;
 
     public Stack() {
         stack = new Object[10];
         size = 10;
     }
 
-    public Stack(int size, boolean dynamic) {
+    public Stack(int size) {
         stack = new Object[size];
         this.size = size;
         dynamic = false;
+    }
+
+    public Stack(int size, boolean dynamic) {
+        stack = new Object[size];
+        this.size = size;
+        this.dynamic = dynamic;
+    }
+
+    private Stack(Object[] stack, int size, int ptr, boolean dynamic) {
+        this.stack = stack;
+        this.ptr = ptr;
+        this.size = size;
+        this.dynamic = dynamic;
     }
 
     public Object peek() {
@@ -33,8 +48,10 @@ public class Stack {
     }
 
     public boolean push(Object o) {
+
         if (o == null)
             return false;
+
         if (dynamic && ptr >= size * 0.8) {
             size = (int) (size * 1.3);
             Object[] newStack = new Object[size];
@@ -45,10 +62,32 @@ public class Stack {
             stack[++ptr] = o;
             return true;
         }
+
         if (ptr == size - 1)
             return false;
+
         stack[++ptr] = o;
+
         return true;
+    }
+
+    public Stack clone() {
+
+        Object[] newStack = new Object[size];
+        for (int i = 0; i <= ptr; i++) {
+            newStack[i] = stack[i];
+        }
+
+        return new Stack(newStack, size, ptr, dynamic);
+    }
+
+    public void clear() {
+        stack = new Object[size];
+        ptr = -1;
+    }
+
+    public void makeDynamic() {
+        dynamic = true;
     }
 
     public int size() {
