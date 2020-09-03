@@ -17,6 +17,8 @@ public class LinkedList {
     private int size = 0;
 
     public void add(Object o) {
+        if (o == null)
+            return;
         if (first == null) {
             first = new node(o);
         } else {
@@ -34,24 +36,33 @@ public class LinkedList {
     }
 
     public void add(int index, Object o) {
+        if (o == null)
+            return;
         if (size <= index) {
+            return;
+        }
+        if (index == 0) {
+            addFirst(o);
             return;
         }
 
         node curr = first;
-        node next;
+        node prev = null;
 
         for (int i = 0; i < index; i++) {
+            prev = curr;
             curr = curr.next;
         }
 
-        next = curr.next;
-        curr = new node(o);
-        curr.next = next;
+        prev.next = new node(o);
+        prev.next.next = curr;
+
         size++;
     }
 
     public void addFirst(Object o) {
+        if (o == null)
+            return;
         node temp = first;
         first = new node(o);
         first.next = temp;

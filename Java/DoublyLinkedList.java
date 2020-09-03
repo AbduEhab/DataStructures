@@ -16,29 +16,30 @@ public class DoublyLinkedList {
     }
 
     private node first = null;
+    private node last = null;
     private int size = 0;
 
+    public DoublyLinkedList() {
+        first = new node(null);
+        last = first;
+    }
+
     public void add(Object o) {
+        if (o == null)
+            return;
         if (first == null) {
-            first = new node(o);
+            first.o = o;
         } else {
-
-            node curr = first;
-            node prev = null;
-
-            while (curr.next != null) {
-                prev = curr;
-                curr = curr.next;
-            }
-
-            curr.next = new node(o);
-            curr.next.previous = prev;
-
+            last.next = new node(o);
+            last.next.previous = last;
+            last = last.next;
         }
         size++;
     }
 
     public void add(int index, Object o) {
+        if (o == null)
+            return;
         if (size <= index) {
             return;
         }
@@ -49,11 +50,18 @@ public class DoublyLinkedList {
             curr = curr.next;
         }
 
-        curr.o = o;
+        node n = new node(o);
+        curr.previous.next = n;
+        n.previous = curr.previous;
+        n.next = curr;
+        curr.previous = n;
+
         size++;
     }
 
     public void addFirst(Object o) {
+        if (o == null)
+            return;
         node temp = first;
         first = new node(o);
         first.next = temp;
