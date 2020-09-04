@@ -1,6 +1,7 @@
 package Java;
 
 /* This is the implementation of a Doubly LinkedList */
+
 public class DoublyLinkedList {
 
     private class node {

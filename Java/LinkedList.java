@@ -1,6 +1,7 @@
 package Java;
 
 /* This is the implementation of a Singly LinkedList */
+
 public class LinkedList {
 
     private class node {

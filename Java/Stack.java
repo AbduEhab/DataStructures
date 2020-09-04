@@ -1,28 +1,29 @@
 package Java;
 
+import java.io.Serializable;
+
 /* This is the implementation of a dynamicly sized Stack that can be initialized as a fixed sized Stack */
 
-public class Stack {
+public class Stack implements Cloneable, Serializable {
 
-    private Object[] stack;
+    private Object[] stack = new Object[10];
     private int ptr = -1;
-    private int size;
+    private int size = 10;
     private boolean dynamic = true;
 
-    public Stack() {
-        stack = new Object[10];
-        size = 10;
-    }
-
     public Stack(int size) {
-        stack = new Object[size];
-        this.size = size;
+        if (size > 0) {
+            stack = new Object[size];
+            this.size = size;
+        }
         dynamic = false;
     }
 
     public Stack(int size, boolean dynamic) {
-        stack = new Object[size];
-        this.size = size;
+        if (size > 0) {
+            stack = new Object[size];
+            this.size = size;
+        }
         this.dynamic = dynamic;
     }
 
