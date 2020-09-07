@@ -7,7 +7,10 @@ public class PriorityQueue {
     private Comparable[] queueObjects = new Comparable[10];
     private int size = 0;
     private int actualSize = 10;
-    private boolean dynamic = false;
+    private boolean dynamic = true;
+
+    public PriorityQueue() {
+    }
 
     public PriorityQueue(int actualSize, boolean dynamic) {
         if (actualSize > 0) {
@@ -21,33 +24,35 @@ public class PriorityQueue {
         if (key == null) {
             return false;
         }
-        if (dynamic && size > actualSize * 0.8) {
-            size = (int) (size * 1.3);
-            Comparable[] newQueue = new Comparable[size];
+        if (dynamic && size >= actualSize * 0.8) {
+            int newActualSize = (int) (size * 1.5);
+            Comparable[] newQueue = new Comparable[newActualSize];
             for (int i = 0; i <= actualSize * 0.8; i++) {
                 newQueue[i] = queueObjects[i];
             }
+            actualSize = newActualSize;
             queueObjects = newQueue;
 
-            for (int i = 0; i < newQueue.length; i++) {
-                if (queueObjects[i].compareTo(key) >= 0) {
-                    shift(i); // still O(n) since the inner forloop happens once and then returns the method
-                    queueObjects[i] = key;
-                    size++;
-                    return true;
-                }
-            }
+            add(key);
         }
         if (actualSize == size) {
             return false;
+        }
+        for (int i = 0; i < size; i++) {
+            if (queueObjects[i].compareTo(key) >= 0) {
+                shift(i); // still O(n) since the inner forloop happens once and then returns the method
+                queueObjects[i] = key;
+                size++;
+                return true;
+            }
         }
         queueObjects[size++] = key;
         return true;
     }
 
     private void shift(int index) {
-        for (int i = size; i <= index; i--) {
-            queueObjects[i - 1] = queueObjects[i];
+        for (int i = size; i >= index; i--) {
+            queueObjects[i + 1] = queueObjects[i];
         }
     }
 
@@ -88,6 +93,14 @@ public class PriorityQueue {
         size--;
 
         return val;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public int getActualSize() {
+        return actualSize;
     }
 
 }

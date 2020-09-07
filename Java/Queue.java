@@ -9,7 +9,10 @@ public class Queue implements Cloneable, Serializable {
     private Object[] queueObjects = new Object[10];
     private int size = 0;
     private int actualSize = 10;
-    private boolean dynamic = false;
+    private boolean dynamic = true;
+
+    public Queue() {
+    }
 
     public Queue(int actualSize, boolean dynamic) {
         if (actualSize > 0) {
@@ -30,11 +33,12 @@ public class Queue implements Cloneable, Serializable {
             return false;
         }
         if (dynamic && size > actualSize * 0.8) {
-            size = (int) (size * 1.3);
-            Object[] newQueue = new Object[size];
+            int newActualSize = (int) (size * 1.5);
+            Object[] newQueue = new Object[newActualSize];
             for (int i = 0; i <= actualSize * 0.8; i++) {
                 newQueue[i] = queueObjects[i];
             }
+            actualSize = newActualSize;
             queueObjects = newQueue;
             queueObjects[size++] = o;
             return true;
@@ -98,6 +102,14 @@ public class Queue implements Cloneable, Serializable {
         }
 
         return new Queue(newQeueu, size, dynamic);
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public int getActualSize() {
+        return actualSize;
     }
 
 }
