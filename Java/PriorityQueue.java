@@ -1,6 +1,6 @@
 package Java;
 
-/* This is the implementation of a Queue */
+/* This is the implementation of a PriorityQueue */
 
 public class PriorityQueue {
 
@@ -33,7 +33,7 @@ public class PriorityQueue {
             actualSize = newActualSize;
             queueObjects = newQueue;
 
-            add(key);
+            return add(key);
         }
         if (actualSize == size) {
             return false;
