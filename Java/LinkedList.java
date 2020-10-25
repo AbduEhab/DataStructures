@@ -113,7 +113,7 @@ public class LinkedList {
 
     public int lastIndexOf(Object o) {
         node curr = first;
-        int count = 0;
+        int count = -1;
 
         for (int i = 0; i < size; i++) {
             if (curr.equals(o))
